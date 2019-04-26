@@ -1,0 +1,453 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     15235,        445]
+NotebookOptionsPosition[     13893,        400]
+NotebookOutlinePosition[     14236,        415]
+CellTagsIndexPosition[     14193,        412]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[TextData[StyleBox["Pailler encryption",
+ FontSize->28,
+ FontWeight->"Bold",
+ FontColor->RGBColor[0., 0., 1.]]], "Text",
+ CellChangeTimes->{{3.747481353355962*^9, 3.7474813571390877`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"p", "=", 
+   RowBox[{"Prime", "[", "50", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"q", "=", 
+   RowBox[{"Prime", "[", "55", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"n", "=", 
+   RowBox[{"p", "*", "q"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"NumPrimes", "=", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"p", "-", "1"}], ")"}], 
+    RowBox[{"(", 
+     RowBox[{"q", "-", "1"}], ")"}]}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.7474814906286397`*^9, 3.7474815376928797`*^9}, {
+   3.747481582012045*^9, 3.7474816385832057`*^9}, {3.7474818510772314`*^9, 
+   3.747481880380478*^9}, {3.747482328651038*^9, 3.7474823293005557`*^9}, {
+   3.747482482454446*^9, 3.747482512724038*^9}, {3.747483695630523*^9, 
+   3.747483746149852*^9}, {3.7474843131450853`*^9, 3.747484321307337*^9}, {
+   3.7474848656351175`*^9, 3.7474848783324776`*^9}, {3.7474849700361605`*^9, 
+   3.7474850125093784`*^9}, {3.747485078694907*^9, 3.7474851121625624`*^9}, {
+   3.747485157644804*^9, 3.7474851921841536`*^9}, {3.747485261985207*^9, 
+   3.747485304525448*^9}, {3.747485569755277*^9, 3.747485615636423*^9}, 
+   3.7474856837030363`*^9, {3.748325670084549*^9, 3.748325698662135*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"message", " ", "m"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"m", "=", 
+    RowBox[{"RandomInteger", "[", "30000", "]"}]}], ";"}]}]], "Input",
+ CellChangeTimes->{{3.747485693748979*^9, 3.747485711611582*^9}, {
+   3.7483256921368446`*^9, 3.748325693182786*^9}, 3.7483293207820406`*^9}],
+
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{
+  "Choosing", " ", "r", " ", "from", "  ", "from", " ", "multiplicative", " ",
+    "group", " ", "Z", " ", 
+   RowBox[{"(", 
+    RowBox[{"N", "^", "2"}], ")"}]}], " ", "*)"}]], "Input",
+ CellChangeTimes->{{3.747484328287446*^9, 3.74748436968333*^9}, {
+  3.748325644798226*^9, 3.7483256575818286`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"IntinZ", "=", 
+   RowBox[{"{", "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"For", "[", 
+  RowBox[{
+   RowBox[{"i", "=", "1"}], ",", 
+   RowBox[{"i", "<", 
+    RowBox[{"n", "+", "1"}]}], ",", 
+   RowBox[{"i", "++"}], ",", 
+   RowBox[{"If", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"GCD", "[", 
+       RowBox[{"i", ",", 
+        RowBox[{"n", "^", "2"}]}], "]"}], "==", "1"}], ",", 
+     RowBox[{"AppendTo", "[", 
+      RowBox[{"IntinZ", ",", "i"}], "]"}]}], "]"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.7474844779567566`*^9, 3.747484568306712*^9}, {
+  3.747484813629854*^9, 3.74748482549638*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"r", "=", 
+   RowBox[{"RandomChoice", "[", "IntinZ", "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.7474846023730087`*^9, 3.7474846203080053`*^9}, {
+   3.7474846669504156`*^9, 3.747484722947739*^9}, {3.7474847874058313`*^9, 
+   3.7474847877486115`*^9}, 3.7483265253152823`*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", "Encrypt", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"c", "=", 
+    RowBox[{"Mod", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"1", "+", "n"}], ")"}], "^", "m"}], ")"}], "*", 
+       RowBox[{"r", "^", "n"}]}], ",", 
+      RowBox[{"n", "^", "2"}]}], "]"}]}], ";"}]}]], "Input",
+ CellChangeTimes->{{3.747481643378586*^9, 3.7474817439227047`*^9}, {
+   3.7474818990259013`*^9, 3.7474819006091394`*^9}, 3.7483265182846155`*^9}],
+
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{"c", " ", "\[Rule]", " ", 
+   RowBox[{"(", 
+    RowBox[{"m", ",", "r"}], ")"}]}], "  ", "*)"}]], "Input",
+ CellChangeTimes->{{3.7474817711196213`*^9, 3.747481845679591*^9}, 
+   3.7474848983788776`*^9, {3.748325728331929*^9, 3.748325729846768*^9}}],
+
+Cell[BoxData[
+ RowBox[{"(*", "Decrypt", "*)"}]], "Input",
+ CellChangeTimes->{{3.747481909552788*^9, 3.7474819107457066`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"c1", "=", 
+   RowBox[{"Mod", "[", 
+    RowBox[{
+     RowBox[{"c", "^", "NumPrimes"}], ",", 
+     RowBox[{"n", "^", "2"}]}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.7474819256135793`*^9, 3.747481968833104*^9}, 
+   3.747485899001636*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"m1", "=", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"c1", "-", "1"}], ")"}], "/", "n"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.74748198424938*^9, 3.7474820121300488`*^9}, 
+   3.747485900360727*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ModInv", "=", 
+   RowBox[{"PowerMod", "[", 
+    RowBox[{"NumPrimes", ",", 
+     RowBox[{"-", "1"}], ",", "n"}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.7474821844409466`*^9, 3.7474822512515783`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"(*", " ", 
+  RowBox[{"Recovered", " ", "message"}], " ", "*)"}]], "Input",
+ CellChangeTimes->{{3.747482261078706*^9, 3.7474822672111473`*^9}, 
+   3.7474831441859255`*^9, {3.7474857342834816`*^9, 3.7474857360594435`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"message", "=", 
+   RowBox[{"Mod", "[", 
+    RowBox[{
+     RowBox[{"m1", "*", "ModInv"}], ",", "n"}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.747482280211344*^9, 3.747482312268033*^9}, 
+   3.7483293126583586`*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"If", "[", 
+  RowBox[{
+   RowBox[{"m", "\[Equal]", "message"}], ",", " ", 
+   RowBox[{"Style", "[", 
+    RowBox[{"\"\<Encryption and Decryption successful\>\"", ",", 
+     RowBox[{"FontColor", "\[Rule]", "Blue"}], ",", " ", 
+     RowBox[{"FontWeight", "\[Rule]", "Bold"}]}], "]"}], ",", " ", 
+   RowBox[{"Style", "[", 
+    RowBox[{"\"\< Encryption and Decryption NOT successful\>\"", ",", 
+     RowBox[{"FontColor", "\[Rule]", "Red"}], ",", 
+     RowBox[{"FontWeight", "\[Rule]", "Bold"}]}], "]"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.7483293367486887`*^9, 3.748329339438043*^9}}],
+
+Cell[BoxData[
+ StyleBox["\<\"Encryption and Decryption successful\"\>",
+  StripOnInput->False,
+  FontWeight->Bold,
+  FontColor->RGBColor[0, 0, 1]]], "Output",
+ CellChangeTimes->{3.748329350194065*^9, 3.7488503205955954`*^9}]
+}, Open  ]],
+
+Cell[TextData[StyleBox["Homomorphic properties",
+ FontSize->22,
+ FontWeight->"Bold",
+ FontColor->RGBColor[0., 0., 1.]]], "Text",
+ CellChangeTimes->{{3.748850274525553*^9, 3.7488502824677553`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{"Choosing", " ", "messages"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"message1", "=", 
+     RowBox[{"RandomInteger", "[", "30000", "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"message2", "=", 
+     RowBox[{"RandomInteger", "[", "30000", "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"r1", "=", 
+     RowBox[{"RandomChoice", "[", "IntinZ", "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"r2", "=", 
+     RowBox[{"RandomChoice", "[", "IntinZ", "]"}]}], ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.7483259994664826`*^9, 3.748326012755519*^9}, {
+   3.7483260647501316`*^9, 3.7483260681680546`*^9}, {3.7483261014402065`*^9, 
+   3.748326151290003*^9}, {3.748326687273097*^9, 3.748326711786736*^9}, 
+   3.748327424991664*^9, {3.748850265885931*^9, 3.748850268353738*^9}}],
+
+Cell[BoxData[
+ RowBox[{"(*", "Encrypting", "*)"}]], "Input",
+ CellChangeTimes->{{3.7483267234253297`*^9, 3.7483267290354085`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"c1", "=", 
+   RowBox[{"Mod", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"1", "+", "n"}], ")"}], "^", 
+        RowBox[{"Mod", "[", 
+         RowBox[{"message1", ",", "n"}], "]"}]}], ")"}], "*", 
+      RowBox[{"r1", "^", "n"}]}], ",", 
+     RowBox[{"n", "^", "2"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"c2", "=", 
+   RowBox[{"Mod", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"1", "+", "n"}], ")"}], "^", 
+        RowBox[{"Mod", "[", 
+         RowBox[{"message2", ",", "n"}], "]"}]}], ")"}], "*", 
+      RowBox[{"r2", "^", "n"}]}], ",", 
+     RowBox[{"n", "^", "2"}]}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.7483267521422815`*^9, 3.7483267750253963`*^9}, {
+  3.748327462503439*^9, 3.748327480358843*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{"Multiplying", " ", "ciphertexts"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"Multc1c2", "=", 
+    RowBox[{"Mod", "[", 
+     RowBox[{
+      RowBox[{"c1", "*", "c2"}], ",", 
+      RowBox[{"n", "^", "2"}]}], "]"}]}], ";"}]}]], "Input",
+ CellChangeTimes->{{3.7483267944887924`*^9, 3.7483268066579127`*^9}, {
+   3.7483268486113605`*^9, 3.7483268921439295`*^9}, {3.7483283189932656`*^9, 
+   3.748328348122871*^9}, 3.748328379015427*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Checking", " ", "addition"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+    RowBox[{"Encrypting", " ", "message1"}], "+", "message2"}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"EncrSumm1m2", "=", 
+    RowBox[{"Mod", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"1", "+", "n"}], ")"}], "^", 
+        RowBox[{"(", 
+         RowBox[{"Mod", "[", 
+          RowBox[{
+           RowBox[{"message1", "+", "message2"}], ",", "n"}], "]"}], ")"}]}], 
+       "*", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"r1", "*", "r2"}], ")"}], "^", "n"}]}], ",", 
+      RowBox[{"n", "^", "2"}]}], "]"}]}], ";"}]}]], "Input",
+ CellChangeTimes->{{3.7483269108962755`*^9, 3.748327069797124*^9}, {
+   3.7483271196574025`*^9, 3.7483271345374374`*^9}, {3.748327400661709*^9, 
+   3.7483274058528304`*^9}, {3.748327583582773*^9, 3.74832760289657*^9}, {
+   3.7483278593779383`*^9, 3.748327859768641*^9}, 3.748328320950165*^9, 
+   3.7483283837579875`*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"If", "[", 
+   RowBox[{
+    RowBox[{"Multc1c2", "==", "EncrSumm1m2"}], ",", " ", 
+    RowBox[{"Style", "[", 
+     RowBox[{"\"\<Pailler Encryption is homomorphic over addition\>\"", ",", 
+      RowBox[{"FontColor", "\[Rule]", "Purple"}], ",", " ", 
+      RowBox[{"FontWeight", "\[Rule]", "Bold"}]}], "]"}], ",", " ", 
+    RowBox[{"Style", "[", 
+     RowBox[{
+     "\"\<Pailler Encryption is NOT homomorphic over addition\>\"", ",", 
+      RowBox[{"FontColor", "\[Rule]", "Red"}], ",", " ", 
+      RowBox[{"FontWeight", "\[Rule]", "Bold"}]}], "]"}]}], "]"}], 
+  " "}]], "Input",
+ CellChangeTimes->{{3.7483270778501654`*^9, 3.748327111984562*^9}, {
+   3.748327143849126*^9, 3.7483271522271657`*^9}, {3.748327188447549*^9, 
+   3.7483271938714457`*^9}, {3.7483272680689507`*^9, 3.7483273428529577`*^9}, 
+   3.7483278665840735`*^9, 3.748327910630652*^9, 3.748332380341794*^9, {
+   3.748850251315986*^9, 3.748850256194501*^9}}],
+
+Cell[BoxData[
+ StyleBox["\<\"Pailler Encryption is homomorphic over addition\"\>",
+  StripOnInput->False,
+  FontWeight->Bold,
+  FontColor->RGBColor[0.5, 0, 0.5]]], "Output",
+ CellChangeTimes->{3.748327920587407*^9, 3.7483283708049383`*^9, 
+  3.7483293503201504`*^9, 3.7488503206737895`*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Checking", " ", "multiplication"}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"Encrypting", " ", "message1", "*", "message2"}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"EncrMultm1m2", "=", 
+    RowBox[{"Mod", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"1", "+", "n"}], ")"}], "^", 
+        RowBox[{"(", 
+         RowBox[{"Mod", "[", 
+          RowBox[{
+           RowBox[{"message1", "*", "message2"}], ",", "n"}], "]"}], ")"}]}], 
+       "*", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"r1", "*", "r2"}], ")"}], "^", "n"}]}], ",", 
+      RowBox[{"n", "^", "2"}]}], "]"}]}], ";"}]}]], "Input",
+ CellChangeTimes->{{3.7483276123834662`*^9, 3.748327637082549*^9}, {
+   3.748327668743328*^9, 3.748327685019096*^9}, {3.7483277236924534`*^9, 
+   3.748327725857092*^9}, {3.7483278088212724`*^9, 3.748327823603783*^9}, 
+   3.748850326626229*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"If", "[", 
+   RowBox[{
+    RowBox[{"Multc1c2", "==", "EncrMultm1m2"}], ",", " ", 
+    RowBox[{"Style", "[", 
+     RowBox[{
+     "\"\<Pailler Encryption is homomorphic over multiplication\>\"", ",", 
+      RowBox[{"FontColor", "\[Rule]", "Blue"}], ",", " ", 
+      RowBox[{"FontWeight", "\[Rule]", "Bold"}]}], "]"}], ",", " ", 
+    RowBox[{"Style", "[", 
+     RowBox[{
+     "\"\<Pailler Encryption is NOT homomorphic over multiplication\>\"", ",", 
+      RowBox[{"FontColor", "\[Rule]", "Red"}], ",", " ", 
+      RowBox[{"FontWeight", "\[Rule]", "Bold"}]}], "]"}]}], "]"}], 
+  " "}]], "Input",
+ CellChangeTimes->{{3.748327873049042*^9, 3.748327895685107*^9}}],
+
+Cell[BoxData[
+ StyleBox["\<\"Pailler Encryption is NOT homomorphic over multiplication\"\>",
+  StripOnInput->False,
+  FontWeight->Bold,
+  FontColor->RGBColor[1, 0, 0]]], "Output",
+ CellChangeTimes->{
+  3.7483278761192846`*^9, {3.748327907821306*^9, 3.748327920604546*^9}, 
+   3.748328370836192*^9, 3.7483293503512096`*^9, 3.748850320705374*^9}]
+}, Open  ]]
+},
+WindowSize->{576, 677},
+WindowMargins->{{Automatic, 304}, {Automatic, 39}},
+FrontEndVersion->"11.0 for Microsoft Windows (64-bit) (July 28, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 192, 4, 47, "Text"],
+Cell[753, 26, 1242, 26, 88, "Input"],
+Cell[1998, 54, 362, 8, 50, "Input"],
+Cell[2363, 64, 342, 8, 30, "Input"],
+Cell[2708, 74, 645, 19, 50, "Input"],
+Cell[3356, 95, 312, 6, 30, "Input"],
+Cell[3671, 103, 544, 15, 50, "Input"],
+Cell[4218, 120, 292, 6, 30, "Input"],
+Cell[4513, 128, 125, 2, 30, "Input"],
+Cell[4641, 132, 278, 8, 30, "Input"],
+Cell[4922, 142, 237, 7, 30, "Input"],
+Cell[5162, 151, 242, 6, 30, "Input"],
+Cell[5407, 159, 244, 4, 30, "Input"],
+Cell[5654, 165, 255, 7, 30, "Input"],
+Cell[CellGroupData[{
+Cell[5934, 176, 608, 12, 88, "Input"],
+Cell[6545, 190, 224, 5, 30, "Output"]
+}, Open  ]],
+Cell[6784, 198, 196, 4, 40, "Text"],
+Cell[6983, 204, 911, 23, 107, "Input"],
+Cell[7897, 229, 130, 2, 30, "Input"],
+Cell[8030, 233, 904, 28, 50, "Input"],
+Cell[8937, 263, 497, 12, 50, "Input"],
+Cell[9437, 277, 1085, 29, 88, "Input"],
+Cell[CellGroupData[{
+Cell[10547, 310, 954, 19, 107, "Input"],
+Cell[11504, 331, 290, 6, 30, "Output"]
+}, Open  ]],
+Cell[11809, 340, 1003, 28, 88, "Input"],
+Cell[CellGroupData[{
+Cell[12837, 372, 693, 16, 126, "Input"],
+Cell[13533, 390, 344, 7, 30, "Output"]
+}, Open  ]]
+}
+]
+*)
+
